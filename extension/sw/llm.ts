@@ -14,7 +14,16 @@
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_VERSION = '2023-06-01';
 const MODEL = 'claude-sonnet-5';
-const MAX_TOKENS = 4096;
+// claude-sonnet-5 supports up to 128,000 output tokens on the synchronous
+// Messages API. The whole response has to be valid JSON (see extractJson
+// below), so a truncated response doesn't degrade gracefully -- it fails
+// JSON.parse and finalizeSession marks the entire session `failed`, not
+// partially structured. There's no cost to leaving generous headroom here:
+// Anthropic bills for tokens actually generated, not this ceiling. 16000 is
+// comfortably above any realistic note (a normal meeting's JSON output is a
+// few hundred to a couple thousand tokens) even for a long, topic-dense
+// multi-hour meeting with many sections and citation-heavy action items.
+const MAX_TOKENS = 16_000;
 
 export class LlmError extends Error {
   constructor(
