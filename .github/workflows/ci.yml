@@ -1,0 +1,51 @@
+name: CI
+
+# Matches the plan's split: fixture-based unit/BDD tests run on every push
+# (fast, no browser); the full Playwright E2E suite runs on a schedule and
+# pre-merge to main, since it's the slower, flakier layer that needs a real
+# Chromium download.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * *' # daily E2E run, catches drift the push-triggered runs on main alone would miss
+
+jobs:
+  unit-and-bdd:
+    name: Unit + BDD (fast)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:coverage
+      - run: npm run test:bdd
+
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    # Pre-merge to main and on the daily schedule -- not on every PR push,
+    # per the plan's own tradeoff between fast feedback and this layer's
+    # cost/flakiness.
+    if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

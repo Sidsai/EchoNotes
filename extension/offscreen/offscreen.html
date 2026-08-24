@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EchoNotes capture engine</title>
+  </head>
+  <body>
+    <!--
+      This document is never shown to the user. It is the long-lived host for
+      tab/mic capture, audio mixing, and (from M2 on) frame sampling and local
+      Whisper inference -- see extension/offscreen/index.ts.
+    -->
+    <script type="module" src="offscreen.js"></script>
+  </body>
+</html>

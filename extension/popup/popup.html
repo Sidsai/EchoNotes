@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EchoNotes</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="popup__header">
+        <span class="popup__dot" data-status="idle" id="status-dot"></span>
+        <h1 class="popup__title">EchoNotes</h1>
+      </header>
+
+      <p class="popup__status" id="status-text">Not recording</p>
+
+      <button class="popup__button" id="toggle-button" type="button">Start capture</button>
+
+      <p class="popup__hint" id="hint-text"></p>
+
+      <footer class="popup__footer">
+        <a href="#" id="open-sessions-link">View past sessions</a>
+      </footer>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

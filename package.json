@@ -1,0 +1,32 @@
+{
+  "name": "echonotes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first meeting notes assistant: captures, transcribes and structures meetings entirely in the browser.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:e2e": "node scripts/build.mjs --e2e",
+    "dev": "node scripts/build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:bdd": "node --import tsx node_modules/@cucumber/cucumber/bin/cucumber.js --config cucumber.json",
+    "test:e2e": "npm run build:e2e && playwright test"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.5.0",
+    "idb": "^8.0.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
+    "@playwright/test": "^1.62.1",
+    "@types/chrome": "^0.0.268",
+    "@vitest/coverage-v8": "^2.1.0",
+    "esbuild": "^0.24.0",
+    "tsx": "^4.23.12",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

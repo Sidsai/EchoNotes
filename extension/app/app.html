@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EchoNotes -- Sessions</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header">
+        <h1>EchoNotes</h1>
+        <p class="app__subtitle">Your sessions, stored locally on this machine.</p>
+        <button class="link-button" id="toggle-settings" type="button">Settings</button>
+      </header>
+
+      <section id="settings-panel" class="settings" hidden>
+        <h2>Settings</h2>
+        <p class="settings__hint">
+          API keys are stored in this browser profile's local storage, not an OS keychain. Treat this browser
+          profile accordingly.
+        </p>
+        <label class="settings__field">
+          Anthropic API key
+          <input type="password" id="anthropic-key-input" placeholder="sk-ant-..." autocomplete="off" />
+        </label>
+        <label class="settings__field">
+          Notion API key
+          <input type="password" id="notion-key-input" placeholder="ntn_..." autocomplete="off" />
+        </label>
+        <label class="settings__field">
+          Notion parent page id
+          <input type="text" id="notion-parent-input" placeholder="the page your notes will be created under" autocomplete="off" />
+        </label>
+        <p class="settings__hint">
+          The Notion integration must be shared with that parent page from Notion's own "Share" menu before export
+          will work -- the API can't create pages at a workspace root.
+        </p>
+        <div class="settings__field">
+          Obsidian vault
+          <div class="settings__vault-row">
+            <button type="button" id="pick-vault-button">Choose vault folder&hellip;</button>
+            <span id="vault-status" class="settings__vault-status">No vault selected</span>
+          </div>
+        </div>
+        <button type="button" id="save-settings-button" class="primary-button">Save settings</button>
+        <p id="settings-saved-hint" class="settings__hint" hidden>Saved.</p>
+      </section>
+
+      <div id="recovery-banner" class="app__banner" hidden></div>
+
+      <section id="list-view">
+        <ul id="session-list" class="app__list"></ul>
+        <p id="empty-state" class="app__empty" hidden>No sessions yet. Start a capture from the extension popup on a Meet or Teams call.</p>
+      </section>
+
+      <section id="detail-view" class="detail" hidden>
+        <button class="link-button" id="back-button" type="button">&larr; Back to sessions</button>
+        <div class="detail__header">
+          <h2 id="detail-title"></h2>
+          <button type="button" id="delete-session-button" class="danger-button">Delete session</button>
+        </div>
+        <p id="detail-meta" class="detail__meta"></p>
+        <p id="detail-status-note" class="detail__status-note" hidden></p>
+        <button type="button" id="generate-note-button" class="primary-button" hidden>Generate note from captured audio</button>
+
+        <div id="note-view"></div>
+
+        <div class="regenerate">
+          <label for="regenerate-instruction">Regenerate with a custom instruction (optional)</label>
+          <textarea id="regenerate-instruction" rows="2" placeholder="e.g. focus on action items only"></textarea>
+          <button type="button" id="regenerate-button" class="primary-button">Regenerate note</button>
+          <span id="regenerate-status" class="detail__status-note"></span>
+        </div>
+
+        <div class="exports">
+          <button type="button" id="export-markdown-button">Export to Markdown / Obsidian</button>
+          <button type="button" id="export-notion-button">Export to Notion</button>
+          <span id="export-status" class="detail__status-note"></span>
+        </div>
+
+        <details class="raw-transcript">
+          <summary>Raw transcript (independent of the structured note)</summary>
+          <div id="raw-transcript-content"></div>
+        </details>
+      </section>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

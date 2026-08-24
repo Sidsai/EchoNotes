@@ -1,0 +1,121 @@
+:root {
+  color-scheme: light dark;
+  --teal: #0f766e;
+  --teal-dim: #99f6e4;
+  --danger: #b91c1c;
+  --bg: #ffffff;
+  --fg: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --fg: #f9fafb;
+    --muted: #9ca3af;
+    --border: #374151;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 260px;
+  font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.popup {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+.popup__dot[data-status='recording'] {
+  background: var(--danger);
+  box-shadow: 0 0 0 3px rgb(185 28 28 / 0.15);
+}
+
+.popup__dot[data-status='idle'] {
+  background: var(--muted);
+}
+
+.popup__dot[data-status='error'] {
+  background: var(--danger);
+}
+
+.popup__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.popup__status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.popup__button {
+  appearance: none;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--teal);
+  color: white;
+}
+
+.popup__button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.popup__button[data-recording='true'] {
+  background: var(--danger);
+}
+
+.popup__hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  min-height: 14px;
+}
+
+.popup__footer {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.popup__footer a {
+  font-size: 12px;
+  color: var(--teal);
+  text-decoration: none;
+}
+
+.popup__footer a:hover {
+  text-decoration: underline;
+}
