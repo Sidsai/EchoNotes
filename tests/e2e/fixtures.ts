@@ -32,8 +32,8 @@ export const test = base.extend<{
     }
 
     const context = await chromium.launchPersistentContext('', {
-      channel: 'chromium',
-      headless: false, // MV3 service workers are unreliable in headless launches without the chromium channel's headless-extension support; headed is the safer default here
+      channel: 'chromium', // enables Chromium's newer headless mode with real extension support, per Playwright's own docs
+      headless: true,
       args: [
         `--disable-extensions-except=${DIST_DIR}`,
         `--load-extension=${DIST_DIR}`,
